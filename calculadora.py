@@ -7,64 +7,121 @@ root.title("Calculadora")
 e = Entry(root, width=60, borderwidth=5) 
 e.grid(row=0, column=0, columnspan=4, padx=6, pady=6)
 
+#Global que aloca o resultado caso o usuário faça diversas operações matematicas antes de apertar o botão "="
+global result
+result = 0
+
+#Indica se o botão apertado anteriormente foi de uma operação matematica ou não
+apos_op = FALSE
+
 #Função para adicionar um numero à sequencia
 def apertar_botao(num):
+    global apos_op
+    if (apos_op == TRUE):
+        e.delete(0,END)
     atual = e.get()
     e.delete(0, END)
     e.insert(0, str(atual) + str(num))
+    apos_op == FALSE
 
-#Função "Clear"(limpa a aba de numeros)
+#Função "Clear"(limpa a aba de numeros) e o result
 def clear():
     e.delete(0, END)
+    result = 0
 
 #Função para soma
 def soma():
     num1 = e.get()
     global p_num
     global acao
+    global apos_op
     acao = "soma"
     p_num = int(num1)
-    e.delete(0, END)
+    if(apos_op == TRUE):
+        igual()
+        apos_op = TRUE
+    else:
+        e.delete(0, END)
+    apos_op = TRUE
 
 #Função para subtração
 def sub():
     num1 = e.get()
     global p_num
     global acao
+    global apos_op
     acao = "sub"
     p_num = int(num1)
-    e.delete(0, END)
+    if(apos_op == TRUE):
+        igual()
+        apos_op = TRUE
+    else:
+        e.delete(0, END)
+    apos_op = TRUE
 
 #Função para soma
 def mult():
     num1 = e.get()
     global p_num
     global acao
+    global apos_op
     acao = "mult"
     p_num = int(num1)
-    e.delete(0, END)
+    if(apos_op == TRUE):
+        igual()
+        apos_op = TRUE
+    else:
+        e.delete(0, END)
+    apos_op = TRUE
 
 #Função para divisão
 def div():
     num1 = e.get()
     global p_num
     global acao
+    global apos_op
     acao = "div"
     p_num = int(num1)
-    e.delete(0, END)
+    if(apos_op == TRUE):
+        igual()
+        apos_op = TRUE
+    else:
+        e.delete(0, END)
+    apos_op = TRUE
 
 #Imprime a resposta
 def igual():
+    global result
     num2 = e.get()
     e.delete(0, END)
     if (acao == "soma"):
-        e.insert(0, p_num + int(num2))
+        if (result == 0):
+            result = p_num + int(num2)
+            e.insert(0, result)
+        else:
+            result += int(num2)
+            e.insert(0, result)
     if (acao == "sub"):
-        e.insert(0, p_num - int(num2))
+        if (result == 0):
+            result = p_num + int(num2)
+            e.insert(0, result)
+        else:
+            result -= int(num2)
+            e.insert(0, result)
     if (acao == "mult"):
-        e.insert(0, p_num * int(num2))
+        if (result == 0):
+            result = p_num + int(num2)
+            e.insert(0, result)
+        else:
+            result *= int(num2)
+            e.insert(0, result)
     if (acao == "div"):
-        e.insert(0, p_num / int(num2))
+        if (result == 0):
+            result = p_num + int(num2)
+            e.insert(0, result)
+        else:
+            result /= int(num2)
+            e.insert(0, result)
       
 
 
